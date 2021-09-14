@@ -1,0 +1,25 @@
+service: pdr-html-pdf-parser
+provider:
+  name: aws
+  profile: default
+  runtime: nodejs12.x
+  region: us-west-2
+  iam:
+    role: arn:aws:iam::412944210659:role/service-role/myrole
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-chrome
+package:
+  exclude:
+    - node_modules/**
+
+functions:
+  hello:
+    handler: handler.hello
+    memorySize: 1536
+    timeout: 30
+    events:
+      - http:
+          path: pdf/
+          method: get
